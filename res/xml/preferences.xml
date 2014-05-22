@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="uni.oulu.fingertracker.enable_debug"
+        android:title="Debug"
+        android:summary="Enable debugging"
+        android:persistent="true"
+        android:defaultValue="false" />
+     <CheckBoxPreference
+        android:key="uni.oulu.fingertracker.enable_bluetooth"
+        android:title="Bluetooth"
+        android:summary="Enable Bluetooth"
+        android:persistent="true"
+        android:defaultValue="false" />
+      <CheckBoxPreference
+        android:key="uni.oulu.fingertracker.enable_local_audio"
+        android:title="Local Audio"
+        android:summary="Enable local audio"
+        android:persistent="true"
+        android:defaultValue="false" />
+    <uni.oulu.fingertracker.ui.NumberPickerPreference
+        android:key="uni.oulu.fingertracker.grid_size"
+        android:title="Grid size"
+        android:summary="The size of the track grid"
+        android:defaultValue="9,11"
+        android:persistent="true"
+        android:dialogLayout="@layout/number_pref"/>
+    
+</PreferenceScreen>

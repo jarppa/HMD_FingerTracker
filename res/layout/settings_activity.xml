@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+   	android:layout_height="match_parent" >
+        <FrameLayout android:layout_weight="2"
+            android:id="@+id/settings_frame"
+            android:layout_width="match_parent"
+    		android:layout_height="wrap_content" >
+        </FrameLayout>
+        <ListView android:id="@+id/extra_settings"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:stackFromBottom="false">
+        </ListView>
+</LinearLayout>

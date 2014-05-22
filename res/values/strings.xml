@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FingerTracker</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="Settings">Settings</string>
+	
+	<string name="Start">Start</string>
+    <string name="Reset">Reset</string>
+    <string name="Connect">Connect</string>
+    <string name="Load">Load</string>
+    <string name="Save">Save</string>
+    <string name="Done">Done</string>
+    <string name="go">Go</string>
+    <string name="sendLogs">Send Logs</string>
+    <string name="deleteLogs">Delete Logs</string>
+    <string-array name="Cycles">
+		<item>3</item>
+		<item>5</item>
+	</string-array>
+	<string-array name="Delay">
+		<item>5</item>
+		<item>10</item>
+	</string-array>
+	<string-array name="Frequency">
+		<item>1</item>
+		<item>1.5</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="OnTimeInFrequency">
+		<item>25%</item>
+		<item>50%</item>
+	</string-array>
+    <string name="BlinkingTime">Blink time</string>
+    <string name="NotBlinkingTime">Delay between cycles</string>
+    <string name="Frequency">Frequency</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Devices</string>
+	<string name="button_scan">Scan</string>    
+	<string name="none_paired">No Paired Devices</string>
+	<string name="none_found">None Found!</string>
+	<string name="brightness">Brightness</string>
+	<string-array name="brightness_array">
+	    <item >0</item>
+		<item >1</item>
+		<item >2</item>
+		<item >3</item>
+		<item >4</item>
+		<item >5</item>
+		<item >6</item>
+		<item >7</item>
+		<item >8</item>
+		<item >9</item>
+		<item >10</item>
+		<item >11</item>
+		<item >12</item>
+		<item >13</item>
+		<item >14</item>
+		<item >15</item>
+	</string-array>
+	<string-array name="dir_array">
+	    <item >UP</item>
+		<item >DOWN</item>
+		<item >LEFT</item>
+		<item >RIGHT</item>
+		<item >LEFT_UP</item>
+		<item >RIGHT_UP</item>
+		<item >LEFT_DOWN</item>
+		<item >RIGHT_DOWN</item>
+		<item >GOAL</item>
+		<item >START</item>
+		<item >NONE</item>
+	</string-array>
+</resources>

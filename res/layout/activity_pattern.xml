@@ -1,0 +1,281 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:gravity="top"
+        android:orientation="horizontal" >
+    	
+	<RelativeLayout
+        	android:layout_width="match_parent"
+        	android:layout_height="match_parent"
+        	android:layout_weight="1"
+        	android:padding="2dp">
+
+        	<Button
+            	android:id="@+id/centerbutt"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_centerHorizontal="true"
+            	android:layout_centerVertical="true"
+            	android:background="@android:color/transparent"
+            	android:text="" />
+
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button5"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_above="@id/centerbutt"
+            	android:layout_centerHorizontal="true"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+        
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button3"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_below="@id/centerbutt"
+            	android:layout_centerHorizontal="true"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button6"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_above="@id/centerbutt"
+            	android:layout_alignRight="@+id/button1"
+            	android:layout_toLeftOf="@id/button5"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+        	
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button7"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_toLeftOf="@id/centerbutt"
+            	android:layout_alignLeft="@id/button6"
+            	android:layout_above="@+id/button1"
+            	android:layout_below="@id/button6"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green"/>
+
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@id/button1"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_below="@id/centerbutt"
+            	android:layout_toLeftOf="@id/button5"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button4"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_above="@id/centerbutt"
+            	android:layout_alignLeft="@+id/button2"
+            	android:layout_toRightOf="@id/button5"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@id/button2"
+           		android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_below="@id/centerbutt"
+            	android:layout_toRightOf="@id/button3"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+
+    	</RelativeLayout>
+
+    	<RelativeLayout
+        	android:layout_width="match_parent"
+        	android:layout_height="match_parent"
+        	android:layout_weight="1"
+        	android:padding="2dp">
+
+        	<Button
+            	android:id="@+id/centerbutt2"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_centerHorizontal="true"
+            	android:layout_centerVertical="true"
+            	android:background="@android:color/transparent"
+            	android:text="" />
+
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button9"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_above="@id/centerbutt2"
+            	android:layout_centerHorizontal="true"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+        
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button12"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_below="@id/centerbutt2"
+            	android:layout_centerHorizontal="true"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button8"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_above="@id/centerbutt2"
+            	android:layout_toLeftOf="@+id/button9"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button13"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_below="@id/centerbutt2"
+            	android:layout_toLeftOf="@id/button12"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button10"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_above="@id/centerbutt2"
+            	android:layout_toRightOf="@id/button9"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button14"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_toRightOf="@id/centerbutt2"
+            	android:layout_alignRight="@id/button10"
+            	android:layout_above="@+id/button11"
+            	android:layout_below="@id/button10"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+        	
+        	<uni.oulu.fingertracker.ui.LedButton
+            	android:id="@+id/button11"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_below="@id/centerbutt2"
+            	android:layout_toRightOf="@id/button12"
+            	android:background="@android:color/transparent"
+            	android:src="@drawable/green" />
+
+    	</RelativeLayout>
+
+    	</LinearLayout>
+
+     <LinearLayout
+         android:id="@+id/pattern_conf_buttons"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_gravity="center_vertical"
+         android:layout_weight="2"
+         android:gravity="left|center_vertical"
+         android:orientation="horizontal" >
+    
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal" >
+
+            <TextView
+        		android:id="@+id/cycles_tv"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:text="@string/BlinkingTime" />
+            <NumberPicker
+        		android:id="@+id/cycles_spinner"
+        		android:layout_width="wrap_content"
+       			android:layout_height="wrap_content"
+        		android:drawSelectorOnTop="true"
+        		android:layout_below="@id/cycles_tv" 
+        		android:layout_alignLeft="@id/cycles_tv"/>
+        </RelativeLayout>
+    
+   		<RelativeLayout
+   		    android:layout_width="match_parent"
+   		    android:layout_height="match_parent"
+   		    android:layout_weight="1"
+   		    android:gravity="center_horizontal" >
+
+    		<TextView
+        		android:id="@+id/freq_tv"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:text="@string/Frequency" />
+    		<NumberPicker
+        		android:id="@+id/freq_spinner"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:drawSelectorOnTop="true"
+        		android:layout_below="@id/freq_tv" 
+        		android:layout_alignLeft="@id/freq_tv"/>
+		</RelativeLayout>
+
+   		<RelativeLayout
+   		    android:layout_width="match_parent"
+   		    android:layout_height="match_parent"
+   		    android:layout_weight="1"
+   		    android:gravity="center_horizontal" >
+
+    		<TextView
+        		android:id="@+id/brightness_tv"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:text="@string/brightness" />
+    		<NumberPicker
+        		android:id="@+id/brightness_spinner"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:drawSelectorOnTop="true"
+        		android:layout_below="@id/brightness_tv" 
+        		android:layout_alignLeft="@id/brightness_tv"/>
+		</RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pattern_go_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="3"
+        android:gravity="left|center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+                android:id="@+id/go_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:onClick="goOnClick"
+                android:text="    Go    " />
+
+
+        <TextView
+                android:id="@+id/log_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginRight="30dp"
+                android:textIsSelectable="true"
+                android:selectAllOnFocus="true"/>
+
+    </LinearLayout>
+</LinearLayout>

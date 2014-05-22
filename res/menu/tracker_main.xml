@@ -1,0 +1,43 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_done"
+        android:orderInCategory="1"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/Done" android:enabled="false" android:visible="true"/>
+    
+    <item android:id="@+id/action_reset" 
+        android:title="@string/Reset"
+        android:orderInCategory="2"
+        android:showAsAction="ifRoom|withText" android:enabled="true"/>
+    
+    <item android:id="@+id/action_connect"
+        android:title="@string/Connect"
+        android:orderInCategory="3"
+        android:showAsAction="never" android:enabled="true"/>
+    
+    <item android:id="@+id/action_load" 
+        android:title="@string/Load"
+        android:orderInCategory="4"
+        android:showAsAction="never" android:enabled="true"/>
+    
+    <item android:id="@+id/action_save"
+        android:title="@string/Save"
+        android:orderInCategory="5"
+        android:showAsAction="never" android:enabled="false"/>
+    
+    <item android:id="@+id/action_settings"
+        android:title="@string/Settings"
+        android:orderInCategory="6"
+        android:showAsAction="never" android:enabled="true"/>
+
+    <item android:id="@+id/action_sendlogs"
+        android:title="@string/sendLogs"
+        android:orderInCategory="7"
+        android:showAsAction="never" android:enabled="true"/>
+    
+    <item android:id="@+id/action_deletelogs"
+        android:title="@string/deleteLogs"
+        android:orderInCategory="8"
+        android:showAsAction="never" android:enabled="true"/>
+</menu>

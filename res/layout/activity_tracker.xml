@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:id="@+id/MainLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#000000">        
+    
+        <uni.oulu.fingertracker.ui.TrackGridLayout
+            android:id="@+id/GridLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:fitsSystemWindows="true"
+            android:orientation="horizontal"
+            android:paddingBottom="2dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="2dp" />
+        
+        <!-- <LinearLayout
+            android:id="@+id/buttonsLayout1"
+        	android:layout_width="match_parent"
+       		android:layout_height="wrap_content"
+        	android:orientation="horizontal" >
+        	<Button 
+        	    android:id="@+id/button_go"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:focusable="false"
+        	    android:textSize="8sp"
+        	    android:text="Done"/>
+        	<Button
+        	    android:id="@+id/button_clear"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:focusable="false"
+        	    android:textSize="8sp"
+        	    android:text="Reset"/>
+        	<Button
+        	    android:id="@+id/button_connect"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:textSize="8sp"
+        	    android:text="Connect"/>
+        	<Button
+        	    android:id="@+id/button_save"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:textSize="8sp"
+        	    android:text="Save"/>
+        	<Button
+        	    android:id="@+id/button_tracks"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:textSize="8sp"
+        	    android:text="Load"/>
+        	<Button
+        	    android:id="@+id/button_settings"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:singleLine="true"
+        	    android:textSize="8sp"
+        	    android:text="Settings"/>
+        	
+        </LinearLayout>  -->
+</LinearLayout>
