@@ -70,7 +70,7 @@ public class BluetoothAudioService {
         mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_UP_KEY,R.raw.ylaoikea);
         mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_DOWN_KEY,R.raw.alavasen);
         mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_UP_KEY,R.raw.ylavasen);
-        mPlayer.loadSample(context,FingerTrackModel.DIR_GOAL_KEY,R.raw.valmis);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_CONFIRM_KEY,R.raw.valmis);
         
         
         if (mAdapter.getProfileConnectionState(BluetoothProfile.A2DP) == BluetoothProfile.STATE_CONNECTED)

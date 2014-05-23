@@ -142,7 +142,7 @@ public class TrackCellView extends TrackNode {
 					setBackgroundDrawable(res.getDrawable(R.drawable.up_right));
 				else if (d == FingerTrackModel.DIR_LEFT_UP_KEY)
 					setBackgroundDrawable(res.getDrawable(R.drawable.up_left));
-				else if (d == FingerTrackModel.DIR_GOAL_KEY)
+				else if (d == FingerTrackModel.DIR_CONFIRM_KEY)
 					setBackgroundDrawable(res.getDrawable(R.drawable.confirmation));
 				else if (d == FingerTrackModel.DIR_START_KEY)
 					setBackgroundDrawable(res.getDrawable(R.drawable.start));

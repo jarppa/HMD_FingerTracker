@@ -199,12 +199,10 @@
         		android:layout_width="wrap_content"
         		android:layout_height="wrap_content"
         		android:text="@string/BlinkingTime" />
-            <Spinner
+            <NumberPicker
         		android:id="@+id/cycles_spinner"
         		android:layout_width="wrap_content"
        			android:layout_height="wrap_content"
-        		android:drawSelectorOnTop="true"
-        		android:entries="@array/Cycles" 
         		android:layout_below="@id/cycles_tv" 
         		android:layout_alignLeft="@id/cycles_tv"/>
         </RelativeLayout>
@@ -220,12 +218,10 @@
         		android:layout_width="wrap_content"
         		android:layout_height="wrap_content"
         		android:text="@string/Frequency" />
-    		<Spinner
+    		<NumberPicker
         		android:id="@+id/freq_spinner"
         		android:layout_width="wrap_content"
-        		android:layout_height="wrap_content"
-        		android:drawSelectorOnTop="true"
-        		android:entries="@array/Frequency" 
+        		android:layout_height="wrap_content" 
         		android:layout_below="@id/freq_tv" 
         		android:layout_alignLeft="@id/freq_tv"/>
 		</RelativeLayout>
@@ -241,12 +237,10 @@
         		android:layout_width="wrap_content"
         		android:layout_height="wrap_content"
         		android:text="@string/brightness" />
-    		<Spinner
+    		<NumberPicker
         		android:id="@+id/brightness_spinner"
         		android:layout_width="wrap_content"
         		android:layout_height="wrap_content"
-        		android:drawSelectorOnTop="true"
-        		android:entries="@array/brightness_array" 
         		android:layout_below="@id/brightness_tv" 
         		android:layout_alignLeft="@id/brightness_tv"/>
 		</RelativeLayout>

@@ -24,8 +24,9 @@ public final class FilePatternStore implements PatternStorer {
 	
 	private Hashtable<String,DirectionPattern> directions;// = new Hashtable<String,DirectionPattern>();
 	
-	public static final long[] DIR_GOAL_VAL = {0x80208220,0x0};
+	public static final long[] DIR_CONFIRM_VAL = {0x80208220,0x0};
 	public static final long[] DIR_START_VAL = {0x80ffffff,0x0};
+	public static final long[] DIR_STOP_VAL = {0x0,0x0};
 	public static final long[] DIR_RIGHT_VAL = {0x800a0000,0x0};
 	public static final long[] DIR_LEFT_VAL = {0x80000802,0x0};
 	public static final long[] DIR_UP_VAL = {0x80008200,0x0};
@@ -34,7 +35,7 @@ public final class FilePatternStore implements PatternStorer {
 	public static final long[] DIR_RIGHT_DOWN_VAL = {0x80280000,0x0};
 	public static final long[] DIR_LEFT_UP_VAL = {0x80000a00,0x0};
 	public static final long[] DIR_RIGHT_UP_VAL = {0x80028000,0x0};
-	public static final long[] DIR_NONE_VAL = {0x0};
+	public static final long[] DIR_NONE_VAL = {0x0,0x0};
 	
 	private static final FilePatternStore SINGLETON = new FilePatternStore();
 	
@@ -58,7 +59,7 @@ public final class FilePatternStore implements PatternStorer {
 		
 		if (directions == null) {
 			directions = new Hashtable<String,DirectionPattern>();
-			directions.put(FingerTrackModel.DIR_GOAL_KEY, new DirectionPattern(DIR_GOAL_VAL, 500,500,1));
+			directions.put(FingerTrackModel.DIR_CONFIRM_KEY, new DirectionPattern(DIR_CONFIRM_VAL, 500,500,1));
 			directions.put(FingerTrackModel.DIR_START_KEY, new DirectionPattern(DIR_START_VAL, 500,500,1));
 			directions.put(FingerTrackModel.DIR_RIGHT_KEY, new DirectionPattern(DIR_RIGHT_VAL, 500,500,1));
 			directions.put(FingerTrackModel.DIR_LEFT_KEY, new DirectionPattern(DIR_LEFT_VAL, 500,500,1));
@@ -69,6 +70,7 @@ public final class FilePatternStore implements PatternStorer {
 			directions.put(FingerTrackModel.DIR_LEFT_UP_KEY, new DirectionPattern(DIR_LEFT_UP_VAL, 500,500,1));
 			directions.put(FingerTrackModel.DIR_RIGHT_UP_KEY, new DirectionPattern(DIR_RIGHT_UP_VAL, 500,500,1));
 			directions.put(FingerTrackModel.DIR_NONE_KEY, new DirectionPattern(DIR_NONE_VAL, 500,500,1));
+			directions.put(FingerTrackModel.DIR_STOP_KEY, new DirectionPattern(DIR_STOP_VAL, 500,500,1));
 		}
 	}
 

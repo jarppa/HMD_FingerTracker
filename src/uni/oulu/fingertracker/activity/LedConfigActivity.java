@@ -1,31 +1,9 @@
 package uni.oulu.fingertracker.activity;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
-
 import uni.oulu.fingertracker.R;
-import uni.oulu.fingertracker.R.id;
-import uni.oulu.fingertracker.R.layout;
-import uni.oulu.fingertracker.R.menu;
 import uni.oulu.fingertracker.communicator.HmdBtCommunicator;
 import uni.oulu.fingertracker.model.DirectionPattern;
 import uni.oulu.fingertracker.model.FilePatternStore;
-import uni.oulu.fingertracker.model.PatternStorer;
 import uni.oulu.fingertracker.ui.LedButton;
 
 import android.os.Bundle;
@@ -36,19 +14,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class LedConfigActivity extends Activity {
 	
-    Spinner cyclesSpinner;
-    Spinner frequencySpinner;
-    Spinner brightnessSpinner;
+	NumberPicker cyclesSpinner;
+	NumberPicker frequencySpinner;
+	NumberPicker brightnessSpinner;
     Spinner directionSpinner;
     TextView log_textview;
-    int blink_time=3;
-    double frequency=1;
-    String LogString="";
+    int blink_time;
+    int frequency;
+    int brightness;
 
     //private Hashtable<String,DirectionPattern> directions = new Hashtable<String,DirectionPattern>();
     private HmdBtCommunicator mBtCommunicator;
@@ -59,17 +38,23 @@ public class LedConfigActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ledconfig);
      
-        cyclesSpinner =(Spinner)findViewById(R.id.cycles_spinner);
-        brightnessSpinner =(Spinner)findViewById(R.id.brightness_spinner);
-        frequencySpinner =(Spinner)findViewById(R.id.freq_spinner);
+        cyclesSpinner =(NumberPicker)findViewById(R.id.cycles_spinner);
+        brightnessSpinner =(NumberPicker)findViewById(R.id.brightness_spinner);
+        frequencySpinner =(NumberPicker)findViewById(R.id.freq_spinner);
         directionSpinner =(Spinner)findViewById(R.id.dir_spinner);
+      
+        cyclesSpinner.setMaxValue(5);
+        cyclesSpinner.setMinValue(1);
+        brightnessSpinner.setMaxValue(15);
+        frequencySpinner.setMaxValue(5);
+        frequencySpinner.setMinValue(1);
         
         //log_textview = (TextView)findViewById(R.id.log_textview);
         
         mBtCommunicator = new HmdBtCommunicator(this, null);
         //directions = mBtCommunicator.getDirections();
         mStore = FilePatternStore.getInstance();
-        mStore.open(getApplicationContext(), "led_patterns3");
+        mStore.open(getApplicationContext(), "led_patterns4");
         mStore.load();
         
         directionSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -158,10 +143,10 @@ public class LedConfigActivity extends Activity {
         values[12] = ((LedButton) findViewById(R.id.button13)).getLedState();
         values[13] = ((LedButton) findViewById(R.id.button14)).getLedState();
         
-        int brightness = Integer.parseInt(brightnessSpinner.getSelectedItem().toString());
+        int brightness = brightnessSpinner.getValue();//getSelectedItem().toString());
         
-        blink_time = Integer.parseInt(cyclesSpinner.getSelectedItem().toString());
-        frequency = Double.valueOf(frequencySpinner.getSelectedItem().toString());
+        blink_time = cyclesSpinner.getValue();//getSelectedItem().toString());
+        frequency = frequencySpinner.getValue();//.getSelectedItem().toString());
 
         DirectionPattern p = new DirectionPattern(new long [] {
                 compileLedValues(values, brightness),0x0 }, (int)((0.5/frequency)*1000),
@@ -190,6 +175,9 @@ public class LedConfigActivity extends Activity {
         	((LedButton) findViewById(R.id.button12)).setLedState(0);
         	((LedButton) findViewById(R.id.button13)).setLedState(0);
         	((LedButton) findViewById(R.id.button14)).setLedState(0);
+        	frequencySpinner.setValue(1);
+        	brightnessSpinner.setValue(0);
+        	cyclesSpinner.setValue(1);
     	}
     	
     	((LedButton) findViewById(R.id.button1)).setLedState(DirectionPattern.extractLedValue(dp.getData(0),0));
@@ -206,6 +194,9 @@ public class LedConfigActivity extends Activity {
     	((LedButton) findViewById(R.id.button12)).setLedState(DirectionPattern.extractLedValue(dp.getData(0),11));
     	((LedButton) findViewById(R.id.button13)).setLedState(DirectionPattern.extractLedValue(dp.getData(0),12));
     	((LedButton) findViewById(R.id.button14)).setLedState(DirectionPattern.extractLedValue(dp.getData(0),13));
+    	frequencySpinner.setValue((dp.getOnDelay()*2)/1000);
+    	brightnessSpinner.setValue(DirectionPattern.extractBrightnessValue(dp.getData(0)));
+    	cyclesSpinner.setValue(dp.getRepeats());
     }
 
     public void storeOnClick(View v)

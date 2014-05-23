@@ -68,7 +68,8 @@
 		<item >RIGHT_UP</item>
 		<item >LEFT_DOWN</item>
 		<item >RIGHT_DOWN</item>
-		<item >GOAL</item>
+		<item >CONFIRM</item>
+		<item >STOP</item>
 		<item >START</item>
 		<item >NONE</item>
 	</string-array>

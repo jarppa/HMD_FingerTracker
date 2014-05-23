@@ -124,7 +124,22 @@ public class TrackLogger {
 			os = null;
 		}
 	}
-	public String getLogs() {
+	public File [] getLogs() {
+		File [] files = context.getExternalFilesDir(null).listFiles(new FileFilter(){
+
+			@Override
+			public boolean accept(File pathname) {
+				if (pathname.getName().contains("Tracklog_"))
+					return true;
+				return false;
+			}
+			
+		});
+		
+		return files;
+	}
+	
+	public String getLogText() {
 		//String [] files = context.getExternalFilesDir(null).list();
 		StringBuilder sb = new StringBuilder();
 		byte [] cb;
@@ -134,7 +149,7 @@ public class TrackLogger {
 
 			@Override
 			public boolean accept(File pathname) {
-				if (pathname.getName().contains("Tracklog_") && !pathname.getName().equals(filename))
+				if (pathname.getName().contains("Tracklog_"))
 					return true;
 				return false;
 			}
@@ -171,7 +186,7 @@ public class TrackLogger {
 			@Override
 			public boolean accept(File pathname) {
 				// TODO Auto-generated method stub
-				if (pathname.getName().contains("Tracklog_"))
+				if (pathname.getName().contains("Tracklog_") && !pathname.getName().equals(filename))
 					return true;
 				return false;
 			}

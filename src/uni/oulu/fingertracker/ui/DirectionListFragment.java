@@ -19,7 +19,7 @@ public class DirectionListFragment extends ListFragment{
 										FingerTrackModel.DIR_LEFT_KEY, FingerTrackModel.DIR_RIGHT_KEY,  
 										FingerTrackModel.DIR_RIGHT_UP_KEY, FingerTrackModel.DIR_RIGHT_DOWN_KEY,
 										FingerTrackModel.DIR_LEFT_UP_KEY, FingerTrackModel.DIR_LEFT_DOWN_KEY,
-										FingerTrackModel.DIR_GOAL_KEY, FingerTrackModel.DIR_NONE_KEY}; 
+										FingerTrackModel.DIR_CONFIRM_KEY, FingerTrackModel.DIR_NONE_KEY}; 
 	
 	@Override  
 	public void onListItemClick(ListView lv, View v, int position, long id) {  

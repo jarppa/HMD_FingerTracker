@@ -23,7 +23,7 @@ public class LocalAudioService {
      */
     public LocalAudioService(Context context, Handler handler) {   
         mPlayer = new RecordPlayer();
-        mPlayer.loadSample(context,FingerTrackModel.DIR_DOWN_KEY,R.raw.alas);
+        /*mPlayer.loadSample(context,FingerTrackModel.DIR_DOWN_KEY,R.raw.alas);
         mPlayer.loadSample(context,FingerTrackModel.DIR_UP_KEY,R.raw.ylos);
         mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_KEY,R.raw.oikea);
         mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_KEY,R.raw.vasen);
@@ -31,7 +31,18 @@ public class LocalAudioService {
         mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_UP_KEY,R.raw.ylaoikea);
         mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_DOWN_KEY,R.raw.alavasen);
         mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_UP_KEY,R.raw.ylavasen);
-        mPlayer.loadSample(context,FingerTrackModel.DIR_GOAL_KEY,R.raw.valmis);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_GOAL_KEY,R.raw.valmis);*/
+        
+        mPlayer.loadSample(context,FingerTrackModel.DIR_DOWN_KEY,R.raw.down);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_UP_KEY,R.raw.up);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_KEY,R.raw.right);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_KEY,R.raw.left);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_DOWN_KEY,R.raw.right_down);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_UP_KEY,R.raw.right_up);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_DOWN_KEY,R.raw.left_down);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_UP_KEY,R.raw.left_up);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_CONFIRM_KEY,R.raw.confirm);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_START_KEY,R.raw.start); 
         
     }
    
@@ -40,6 +51,6 @@ public class LocalAudioService {
     }
     
     public void stop() {
-    	
+    	mPlayer.close();
     }
 }

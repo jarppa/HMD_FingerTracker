@@ -44,7 +44,8 @@ public class LocalAudioCommunicator implements HmdCommunicator {
 
 	@Override
 	public void doStop() {
-		// TODO Auto-generated method stub
+		if (mAudioService != null)
+			mAudioService.stop();
 		
 	}
 

@@ -92,7 +92,7 @@ public class HmdBtCommunicator implements HmdCommunicator {
 		activity_context = a;
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		mStore = FilePatternStore.getInstance();
-		mStore.open(activity_context, "led_patterns3");
+		mStore.open(activity_context, "led_patterns4");
 	}
 	
 	@Override

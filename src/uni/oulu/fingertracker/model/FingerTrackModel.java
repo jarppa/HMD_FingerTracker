@@ -5,6 +5,7 @@
 
 package uni.oulu.fingertracker.model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -15,7 +16,8 @@ import android.content.Context;
 
 public class FingerTrackModel {
 	
-	public static final String DIR_GOAL_KEY = "GOAL";
+	public static final String DIR_CONFIRM_KEY = "CONFIRM";
+	public static final String DIR_STOP_KEY = "STOP";
 	public static final String DIR_START_KEY = "START";
 	public static final String DIR_RIGHT_KEY = "RIGHT";
 	public static final String DIR_LEFT_KEY = "LEFT";
@@ -27,7 +29,7 @@ public class FingerTrackModel {
 	public static final String DIR_RIGHT_UP_KEY = "RIGHT_UP";
 	public static final String DIR_NONE_KEY = "NONE";
 	
-	public static final String [] DIRECTION_KEYS = {DIR_GOAL_KEY,
+	public static final String [] DIRECTION_KEYS = {DIR_CONFIRM_KEY,
 		DIR_START_KEY,
 		DIR_RIGHT_KEY,
 		DIR_LEFT_KEY,
@@ -37,7 +39,8 @@ public class FingerTrackModel {
 		DIR_RIGHT_DOWN_KEY,
 		DIR_LEFT_UP_KEY,
 		DIR_RIGHT_UP_KEY,
-		DIR_NONE_KEY
+		DIR_NONE_KEY,
+		DIR_STOP_KEY
 	};
 	
 	public static final int TARGET_MODE = 0;
@@ -85,6 +88,7 @@ public class FingerTrackModel {
 	public void finish() {
 		if (logger != null) {
 			logger.stop();
+			logger.close();
 			logger = null;
 		}	
 	}
@@ -238,11 +242,11 @@ public class FingerTrackModel {
 	}
 	
 	public void startTracking() {
-
 		logger.log("Track is: ", trackToArray());
 		logger.log("Start tracking");
 		clearAllVisited();
 		setState(STATE_TRACKING);
+		tellComms(DIR_START_KEY);
 	}
 	
 	public void setTrackReady() {
@@ -262,7 +266,7 @@ public class FingerTrackModel {
 	}
 	
 	public boolean isTracking() {
-		return (state == STATE_TRACKING) ? true : false;
+		return (state == STATE_TRACKING || state == STATE_DONE) ? true : false;
 	}
 	
 	public boolean isCreating() {
@@ -312,8 +316,14 @@ public class FingerTrackModel {
 	
 	public String getLogText() {
 		if (logger != null)
-			return logger.getLogs();
+			return logger.getLogText();
 		
+		return null;
+	}
+	
+	public File [] getLogs() {
+		if (logger != null)
+			return logger.getLogs();
 		return null;
 	}
 	
@@ -415,7 +425,7 @@ public class FingerTrackModel {
 		
 		if (from == to) {
 			if (to.isGoal())
-				return DIR_GOAL_KEY;
+				return DIR_CONFIRM_KEY;
 			else
 				return DIR_START_KEY;
 		}

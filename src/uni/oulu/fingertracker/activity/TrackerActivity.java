@@ -5,6 +5,9 @@
 
 package uni.oulu.fingertracker.activity;
 
+import java.io.File;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.Date;
 
 import uni.oulu.fingertracker.communicator.BtAudioCommunicator;
@@ -27,15 +30,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.Toast;
 
 public class TrackerActivity extends Activity implements FingerTrackStateListener, OnSharedPreferenceChangeListener {
@@ -300,7 +301,7 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
         switch (item.getItemId()) {
         	case R.id.action_done:
         		mModel.setTrackReady();
-				mModel.startTracking();
+				//mModel.startTracking();
 				invalidateAll();
 				return true;
 			
@@ -334,16 +335,28 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
 				return true;
 				
             case R.id.action_sendlogs:
-            	Intent intent = new Intent(Intent.ACTION_SEND);
-            	intent.setType("message/rfc822");
-            	//i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-            	intent.putExtra(Intent.EXTRA_SUBJECT, "HMD Finger tracker logs");
-            	intent.putExtra(Intent.EXTRA_TEXT   , mModel.getLogText());
-            	try {
-            	    startActivity(Intent.createChooser(intent, "Send mail..."));
-            	} catch (android.content.ActivityNotFoundException ex) {
-            	    Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            	File [] fs = mModel.getLogs();
+            	if (fs != null && fs.length > 0) {
+            		ArrayList<Uri> uris = new ArrayList<Uri>();
+            		for (int j=0; j<fs.length;j++) {
+            			uris.add(Uri.parse("file://"+fs[j]));
+            		}
+            		Intent intent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
+            		intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                	intent.setType("message/rfc822");
+                	//i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+                	intent.putExtra(Intent.EXTRA_SUBJECT, "HMD Finger tracker logs");
+                	intent.putExtra(Intent.EXTRA_TEXT   , "This email was sent using HMD Finger Tracker application.");
+            		intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+            		try {
+                	    startActivity(Intent.createChooser(intent, "Send mail..."));
+                	} catch (android.content.ActivityNotFoundException ex) {
+                	    Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                	}
             	}
+            	else
+            		Toast.makeText(this, "There aren't any logs to send.", Toast.LENGTH_SHORT).show();
+            	
             	return true;
             
             case R.id.action_deletelogs:
@@ -366,7 +379,7 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
 			break;
 			
 		case FingerTrackModel.STATE_DONE:
-			mModel.startCreating();
+			//mModel.startCreating();
 			if (mOptionsMenu != null) {
 				doneItem.setEnabled(false);
 				loadItem.setEnabled(true);
@@ -393,6 +406,7 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
 		switch(what) {
 		case FingerTrackModel.TRACK_CLEARED:
 			doneItem.setEnabled(false);
+			saveItem.setEnabled(false);
 			break;
 		
 		case FingerTrackModel.TRACK_NODE_ADDED:
@@ -511,7 +525,7 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
 		else if (key_in(key,FingerTrackModel.DIRECTION_KEYS)) {
 			if (mBtCommunicator == null)
 				return;
-			String val = mLedPrefs.getString(key, "");
+			//String val = mLedPrefs.getString(key, "");
 			//Hashtable<String,DirectionPattern> d = mBtCommunicator.getDirections();
 			//d.put(key, new DirectionPattern( new long[] {val}, 0, 0, 0, 1));
 			//mBtCommunicator.setDirections(val);

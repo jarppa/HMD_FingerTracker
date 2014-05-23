@@ -44,7 +44,7 @@ public class PathTrack extends FingerTrack {
 			if (d != FingerTrackModel.DIR_NONE_KEY) {
 				last.setDirToNext(d);
 				last.setGoal(false);
-				n.setDirToNext(FingerTrackModel.DIR_GOAL_KEY);
+				n.setDirToNext(FingerTrackModel.DIR_CONFIRM_KEY);
 				n.setGoal(true);
 				track.add(n);
 				return true;
@@ -146,7 +146,7 @@ public class PathTrack extends FingerTrack {
 				for (j=0; j<cols; j++) {
 					temp = nodes[i][j];
 					if (temp.isGoal())
-						temp.setData(FingerTrackModel.DIR_GOAL_KEY, track.size()-1);
+						temp.setData(FingerTrackModel.DIR_CONFIRM_KEY, track.size()-1);
 					
 					temp.setData(mModel.getDirectionTo(temp,track.get(c)),c);
 				}
