@@ -1,21 +1,20 @@
 package uni.oulu.fingertracker.model;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.nio.CharBuffer;
 import java.util.Date;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
+@SuppressLint("NewApi")
 public class TrackLogger {
 
 	static final String BEGIN = "LOG START\n";
@@ -31,7 +30,13 @@ public class TrackLogger {
 		try {
 			this.context = context;
 			this.filename = filename;
-			file = new File(context.getExternalFilesDir(null), "Tracklog_"+filename);
+			File f = context.getExternalFilesDir(null);
+			if (f == null)
+				f = Environment.getExternalStorageDirectory();
+			if (f == null)
+				return;
+			file = new File(f, "Tracklog_"+filename);
+			
 			Log.d("LOGGER", file.getAbsolutePath());
 			os = new FileOutputStream(file);
 			//os = new BufferedOutputStream(fos);
@@ -124,8 +129,11 @@ public class TrackLogger {
 			os = null;
 		}
 	}
-	public File [] getLogs() {
-		File [] files = context.getExternalFilesDir(null).listFiles(new FileFilter(){
+	public File [] getLogs() {		
+    	File [] files = null;
+    	File f = getFileDir();
+		if (f != null) {
+			files = f.listFiles(new FileFilter(){
 
 			@Override
 			public boolean accept(File pathname) {
@@ -134,8 +142,8 @@ public class TrackLogger {
 				return false;
 			}
 			
-		});
-		
+			});
+		}
 		return files;
 	}
 	
@@ -145,7 +153,9 @@ public class TrackLogger {
 		byte [] cb;
 		FileInputStream is = null;
 		
-		File [] files = context.getExternalFilesDir(null).listFiles(new FileFilter(){
+		File file = getFileDir();
+		
+		File [] files =file.listFiles(new FileFilter(){
 
 			@Override
 			public boolean accept(File pathname) {
@@ -181,7 +191,9 @@ public class TrackLogger {
 	
 	public void clearLogs() {
 		//String [] files = context.getExternalFilesDir(null).list();
-		File [] files = context.getExternalFilesDir(null).listFiles(new FileFilter(){
+		File f = getFileDir();
+		
+		File [] files = f.listFiles(new FileFilter(){
 
 			@Override
 			public boolean accept(File pathname) {
@@ -193,9 +205,30 @@ public class TrackLogger {
 			
 		});
 		
-		for (File f : files) {
-			f.delete();
+		for (File file : files) {
+			file.delete();
 		}
 		
+	}
+	
+	private File getFileDir() {
+		File f=null;
+		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+    	if (currentApiVersion >= 19) {
+    		File[] fs = context.getExternalFilesDirs(null);
+    		for (File file : fs){
+    			if (file.canWrite() && file.getFreeSpace() > 1000000) {
+    				f = file;
+    				break;
+    			}
+    		}
+    		
+    	}
+    	else {
+    		f= context.getExternalFilesDir(null);
+    		if (f == null)
+    			f = Environment.getExternalStorageDirectory();
+    	}
+    	return f;
 	}
 }

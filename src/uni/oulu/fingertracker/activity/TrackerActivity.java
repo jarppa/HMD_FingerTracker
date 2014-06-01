@@ -346,10 +346,12 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
                 	intent.setType("message/rfc822");
                 	//i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
                 	intent.putExtra(Intent.EXTRA_SUBJECT, "HMD Finger tracker logs");
-                	intent.putExtra(Intent.EXTRA_TEXT   , "This email was sent using HMD Finger Tracker application.");
+                	//FUN FACT: Nexus5 spews out hadled errors on charseq data with EXTRA_TEXT eventhough API defines it so...
+                	intent.putExtra(Intent.EXTRA_TEXT, "This email was sent using HMD Finger Tracker application.");
             		intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
             		try {
-                	    startActivity(Intent.createChooser(intent, "Send mail..."));
+            			
+                	    startActivity(Intent.createChooser(intent, "Send logs..."));
                 	} catch (android.content.ActivityNotFoundException ex) {
                 	    Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 	}
