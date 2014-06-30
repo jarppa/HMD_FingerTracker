@@ -49,7 +49,23 @@ public class BluetoothAudioService {
     public static final int STATE_CONNECTING = 3;
     
     private RecordPlayer mPlayer;
-    private BluetoothA2dp mProxy;
+    private BluetoothA2dp mProxy = null;
+    
+ // Define Service Listener of BluetoothProfile
+    private BluetoothProfile.ServiceListener mProfileListener = new BluetoothProfile.ServiceListener() {
+    	public void onServiceConnected(int profile, BluetoothProfile proxy) {
+    		if (profile == BluetoothProfile.HEADSET) {
+    			mProxy = (BluetoothA2dp) proxy;
+    			setState(STATE_CONNECTED);
+    		}
+    	}
+    	public void onServiceDisconnected(int profile) {
+    		if (profile == BluetoothProfile.HEADSET) {
+    			mProxy = null;
+    			setState(STATE_DISCONNECTED);
+    		}
+    	}
+    };
     
     /**
      * Constructor. Prepares a new BluetoothChat session.
@@ -59,41 +75,27 @@ public class BluetoothAudioService {
     public BluetoothAudioService(Context context, Handler handler) {
     	
         mAdapter = BluetoothAdapter.getDefaultAdapter();
-        mAdapter.getProfileProxy(context, mProfileListener, BluetoothProfile.A2DP);
+        //mAdapter.getProfileProxy(context, mProfileListener, BluetoothProfile.A2DP);
         
         mPlayer = new RecordPlayer();
-        mPlayer.loadSample(context,FingerTrackModel.DIR_DOWN_KEY,R.raw.alas);
-        mPlayer.loadSample(context,FingerTrackModel.DIR_UP_KEY,R.raw.ylos);
-        mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_KEY,R.raw.oikea);
-        mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_KEY,R.raw.vasen);
-        mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_DOWN_KEY,R.raw.alaoikea);
-        mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_UP_KEY,R.raw.ylaoikea);
-        mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_DOWN_KEY,R.raw.alavasen);
-        mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_UP_KEY,R.raw.ylavasen);
-        mPlayer.loadSample(context,FingerTrackModel.DIR_CONFIRM_KEY,R.raw.valmis);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_DOWN_KEY,R.raw.down);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_UP_KEY,R.raw.up);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_KEY,R.raw.right);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_KEY,R.raw.left);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_DOWN_KEY,R.raw.right_down);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_RIGHT_UP_KEY,R.raw.right_up);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_DOWN_KEY,R.raw.left_down);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_LEFT_UP_KEY,R.raw.left_up);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_CONFIRM_KEY,R.raw.confirm);
+        mPlayer.loadSample(context,FingerTrackModel.DIR_START_KEY,R.raw.start);
         
         
-        if (mAdapter.getProfileConnectionState(BluetoothProfile.A2DP) == BluetoothProfile.STATE_CONNECTED)
+        /*if (mAdapter.getProfileConnectionState(BluetoothProfile.A2DP) == BluetoothProfile.STATE_CONNECTED)
         	mState = STATE_CONNECTED;
         else
-        	mState = STATE_NONE;
+        	mState = STATE_NONE;*/
         mHandler = handler;
     }
-
-    // Define Service Listener of BluetoothProfile
-    private BluetoothProfile.ServiceListener mProfileListener = new BluetoothProfile.ServiceListener() {
-    public void onServiceConnected(int profile, BluetoothProfile proxy) {
-        if (profile == BluetoothProfile.HEADSET) {
-        	mProxy = (BluetoothA2dp) proxy;
-			setState(STATE_CONNECTED);
-        }
-    }
-    public void onServiceDisconnected(int profile) {
-        if (profile == BluetoothProfile.HEADSET) {
-        	mProxy = null;
-        }
-    }
-    };
     
     /**
      * Set the current state of the chat connection
@@ -118,7 +120,7 @@ public class BluetoothAudioService {
     }
     
     public void stop() {
-    	mAdapter.closeProfileProxy(BluetoothProfile.A2DP,mProxy);
     	
+    	//mAdapter.closeProfileProxy(BluetoothProfile.A2DP,mProxy);
     }
 }

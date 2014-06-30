@@ -40,8 +40,10 @@ public class RecordPlayer {
 	}
 
 	public void close() {
-		mPool.release();
+		if (mPool != null) {
+			mPool.release();
+			mPool = null;
+		}
 		sounds.clear();
-		mPool = null;
 	}
 }

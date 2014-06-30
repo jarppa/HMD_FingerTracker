@@ -76,16 +76,16 @@ public class DirectionSenderActivity extends Activity implements OnClickListener
     
     @Override
     protected void onPause() {
-    	super.onPause();
     	if (mBtComm != null)
     		mBtComm.doPause();
+    	super.onPause();
     }
     
     @Override
     protected void onStop() {
-    	super.onStop();
     	if (mBtComm != null)
     		mBtComm.doStop();
+    	super.onStop();
     }
     
     @Override

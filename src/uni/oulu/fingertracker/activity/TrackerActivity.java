@@ -6,7 +6,6 @@
 package uni.oulu.fingertracker.activity;
 
 import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -101,97 +100,13 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
         mHider = new Hider();
         
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        mLedPrefs = getSharedPreferences("uni.oulu.fingertracker.LEDPREFS", 0);
-        mLedPrefs.registerOnSharedPreferenceChangeListener(this);
+        mSharedPrefs.registerOnSharedPreferenceChangeListener(this);
         
-        /*Button butt = (Button)findViewById(R.id.button_go);
-        butt.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				mModel.setTrackReady();
-				mModel.startTracking();
-				invalidateAll();
-			}
-        	
-        });
-        butt = (Button)findViewById(R.id.button_clear);
-        butt.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				if (mModel.isCreating())
-					mModel.clearTrack();
-				else if (mModel.isTracking())
-					mModel.startCreating();
-				
-				invalidateAll();
-			}
-        	
-        });
-        butt = (Button)findViewById(R.id.button_connect);
-        butt.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				if (mBtCommunicator != null)
-					mBtCommunicator.findDevice();
-			}
-        	
-        });
-        butt = (Button)findViewById(R.id.button_tracks);
-        butt.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				startActivityForResult(new Intent(mContext,TrackPickerActivity.class), TrackPickerActivity.REQUEST_PICK_TRACK);
-			}
-        	
-        });
-        butt = (Button)findViewById(R.id.button_save);
-        butt.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				TrackStore s = new TrackStore(mContext);
-				s.putTrack(mModel.getTrack(), String.valueOf(new Date().getTime()));
-				s.saveTracks();
-			}
-        	
-        });
-        
-        butt = (Button)findViewById(R.id.button_settings);
-        butt.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent i = new Intent(mContext,SettingsActivity.class);
-				startActivity(i);
-			}
-        	
-        });*/
- 
         String s = mSharedPrefs.getString(SettingsFragment.KEY_GRIDSIZE, "15,19");
         int c = Integer.valueOf(s.split(",")[0]);
         int r = Integer.valueOf(s.split(",")[1]);
         
-        mModel = new FingerTrackModel(this,c,r);
-        fillCells();
-        
-        mModel.setDebug(mSharedPrefs.getBoolean(SettingsFragment.KEY_DEBUG, false));
-        
-        mModel.attachStateListener(this);
-        
-        if (mSharedPrefs.getBoolean(SettingsFragment.KEY_BLUETOOTH, false)) {
-        	mBtCommunicator = new HmdBtCommunicator(this, null);
-        	mModel.addCommunicator(mBtCommunicator);
-        	mBtAudioCommunicator = new BtAudioCommunicator(this);
-            mModel.addCommunicator(mBtAudioCommunicator);
-        }
-        
-        if (mSharedPrefs.getBoolean(SettingsFragment.KEY_LOCAL_AUDIO, false)) {
-        	mLocalAudioCommunicator = new LocalAudioCommunicator(this);
-        	mModel.addCommunicator(mLocalAudioCommunicator);
-        }
-        
-        mAccCommunicator = new UsbCommunicator(this,mUIHandler); 
-        mModel.addCommunicator(mAccCommunicator);
+        initModel(c,r);
        
         //hideUi();
     }
@@ -199,6 +114,7 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
     
     @Override
     protected void onStart() {
+    	super.onStart();
     	if (mBtCommunicator != null)
     		mBtCommunicator.doStart();
     	if (mAccCommunicator != null)
@@ -207,26 +123,18 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
     		mBtAudioCommunicator.doStart();
     	if (mLocalAudioCommunicator != null)
     		mLocalAudioCommunicator.doStart();
-    	super.onStart();
     }
     
     @Override
     protected void onDestroy() {
-    	if (mBtCommunicator != null)
-    		mBtCommunicator.doStop();
-    	if (mAccCommunicator != null)
-    		mAccCommunicator.doStop();
-    	if (mBtAudioCommunicator != null)
-    		mBtAudioCommunicator.doStop();
-    	if (mLocalAudioCommunicator != null)
-    		mLocalAudioCommunicator.doStop();
-    	
-    	mLedPrefs.unregisterOnSharedPreferenceChangeListener(this);
+    	mSharedPrefs.unregisterOnSharedPreferenceChangeListener(this);
     	super.onDestroy();
     }
     
     @Override
     protected void onResume() {
+    	super.onResume();
+    	
     	if (mBtCommunicator != null)
     		mBtCommunicator.doResume();
     	if (mAccCommunicator != null)
@@ -236,7 +144,34 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
     	if (mLocalAudioCommunicator != null)
     		mLocalAudioCommunicator.doResume();
     	//hideUi();
-    	super.onResume();
+    }
+    
+    @Override
+    protected void onPause() {
+    	if (mBtCommunicator != null)
+    		mBtCommunicator.doPause();
+    	if (mAccCommunicator != null)
+    		mAccCommunicator.doPause();
+    	if (mBtAudioCommunicator != null)
+    		mBtAudioCommunicator.doPause();
+    	if (mLocalAudioCommunicator != null)
+    		mLocalAudioCommunicator.doPause();
+    	//hideUi();
+    	super.onPause();
+    }
+    
+    @Override
+    protected void onStop() {
+    	if (mBtCommunicator != null)
+    		mBtCommunicator.doStop();
+    	if (mAccCommunicator != null)
+    		mAccCommunicator.doStop();
+    	if (mBtAudioCommunicator != null)
+    		mBtAudioCommunicator.doStop();
+    	if (mLocalAudioCommunicator != null)
+    		mLocalAudioCommunicator.doStop();
+    	//hideUi();
+    	super.onStop();
     }
     
     @Override
@@ -491,10 +426,11 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-		// TODO Auto-generated method stub
+		
 		if (key.equals(SettingsFragment.KEY_DEBUG)) {
             mModel.setDebug(prefs.getBoolean(SettingsFragment.KEY_DEBUG, false));
         }
+		
 		else if(key.equals(SettingsFragment.KEY_BLUETOOTH)) {
 			if (prefs.getBoolean(SettingsFragment.KEY_BLUETOOTH, false)){
 				if (mBtCommunicator == null){
@@ -521,14 +457,27 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
 				}
 			}
 		}
+		else if (key.equals(SettingsFragment.KEY_LOCAL_AUDIO)) {
+			if (prefs.getBoolean(SettingsFragment.KEY_LOCAL_AUDIO, false)){
+				if (mLocalAudioCommunicator == null){
+					mLocalAudioCommunicator = new LocalAudioCommunicator(this);
+					mModel.addCommunicator(mLocalAudioCommunicator);
+					mLocalAudioCommunicator.doStart();
+				}
+			}
+			else {
+				if (mLocalAudioCommunicator != null){
+					mLocalAudioCommunicator.doStop();
+					mModel.removeCommunicator(mLocalAudioCommunicator);
+					mLocalAudioCommunicator = null;
+				}
+			}
+		}
 		else if(key.equals(SettingsFragment.KEY_GRIDSIZE)) {
 			String s = mSharedPrefs.getString(SettingsFragment.KEY_GRIDSIZE, "11,9");
 	        int c = Integer.valueOf(s.split(",")[0]);
 	        int r = Integer.valueOf(s.split(",")[1]);
-	        mModel.finish();
-	        emptyCells();
-	        mModel = new FingerTrackModel(this,c,r);
-	        fillCells();
+	        initModel(c,r);
 		}
 		else if (key_in(key,FingerTrackModel.DIRECTION_KEYS)) {
 			if (mBtCommunicator == null)
@@ -556,6 +505,65 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
 			hideUi();
 		}
 		
+	}
+	
+	private void initModel(int cols, int rows) {
+		/* If already once init'd, finish first */
+		if (mModel != null)
+			mModel.finish();
+		
+		/* Empty the the grid view in preparation */
+        emptyCells();
+        
+        /* Create the new model */
+        mModel = new FingerTrackModel(this,cols,rows);
+        
+        /* Adjust according to preferences */
+        mModel.setDebug(mSharedPrefs.getBoolean(SettingsFragment.KEY_DEBUG, false));
+        
+        if (mSharedPrefs.getBoolean(SettingsFragment.KEY_BLUETOOTH, false)) {
+        	if (mBtCommunicator == null) {
+        		mBtCommunicator = new HmdBtCommunicator(this, null);
+        		mModel.addCommunicator(mBtCommunicator);
+        		mBtCommunicator.doStart();
+        	}
+        	else
+        		mModel.addCommunicator(mBtCommunicator);
+        	
+        	if (mBtAudioCommunicator == null) {
+        		mBtAudioCommunicator = new BtAudioCommunicator(this);
+        		mModel.addCommunicator(mBtAudioCommunicator);
+        		mBtAudioCommunicator.doStart();
+        	}
+        	else
+        		mModel.addCommunicator(mBtAudioCommunicator);
+        }
+        
+        
+        if (mSharedPrefs.getBoolean(SettingsFragment.KEY_LOCAL_AUDIO, false)) {
+        	
+        	if (mLocalAudioCommunicator == null){
+				mLocalAudioCommunicator = new LocalAudioCommunicator(this);
+				mModel.addCommunicator(mLocalAudioCommunicator);
+				mLocalAudioCommunicator.doStart();
+			}
+        	else
+        		mModel.addCommunicator(mLocalAudioCommunicator);
+        	
+        }
+        
+        if (mAccCommunicator == null) {
+        	mAccCommunicator = new UsbCommunicator(this,mUIHandler); 
+        	mModel.addCommunicator(mAccCommunicator);
+        }
+        else
+        	mModel.addCommunicator(mAccCommunicator);
+        
+        /* Populate the grid view */
+        fillCells();
+        
+        /* Attach to the new model */
+        mModel.attachStateListener(this);
 	}
 }
 	

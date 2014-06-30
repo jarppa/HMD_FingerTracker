@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.NumberPicker;
@@ -42,22 +43,24 @@ Integer initialValue2;
 			picker1.clearFocus();
 			initialValue1 = picker1.getValue();
 			picker2.clearFocus();
-			initialValue2 = picker2.getValue();	
-			//persistInt( initialValue1 );
-			persistString(new String(String.valueOf(initialValue1)+","+String.valueOf(initialValue2)));
-			//persistInt( initialValue2 );
-			callChangeListener( new String(String.valueOf(initialValue1)+","+String.valueOf(initialValue2)) );
+			initialValue2 = picker2.getValue();
+			String new_value = new String(String.valueOf(initialValue1)+","+String.valueOf(initialValue2));
+			if (persistString(new_value))
+				callChangeListener(new_value);
 		}
 	}
 	
 	@Override
 	protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-		String def;
-		if (defaultValue instanceof String) {
-			def = (String)defaultValue;
+		String def = "9,11";
+		if (restorePersistedValue) {
+			def = getPersistedString(def);
 		}
-		else
-			def = "2,2";
+		else {
+			if (defaultValue instanceof String) {
+				def = (String)defaultValue;
+			}
+		}
 		
 		initialValue1 = Integer.parseInt(def.split(",")[0]);
 		initialValue2 = Integer.parseInt(def.split(",")[1]);

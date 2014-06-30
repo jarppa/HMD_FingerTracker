@@ -229,7 +229,11 @@ public abstract class USBControl extends Thread{
 
         //Removes the usb receiver
         public void destroyReceiver() {
+        	try {
                 context.unregisterReceiver(mUsbReceiver);
+        	}catch (RuntimeException re) {
+                /* Might not be registered */
+            }	
         }
 }
 

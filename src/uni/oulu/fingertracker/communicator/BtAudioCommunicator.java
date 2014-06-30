@@ -58,17 +58,7 @@ public class BtAudioCommunicator implements HmdCommunicator {
 	
 	@Override
 	public void doStart() {
-
-		// If BT is not on, request that it be enabled.
-	    // setupChat() will then be called during onActivityResult
-	    if (!mBluetoothAdapter.isEnabled()) {
-	        //Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-	        //activity_context.startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-	    // Otherwise, setup the chat session
-	    } else {
-	        if (mAudioService == null) setupAudio();
-	    }
-	    
+		if (mAudioService == null) setupAudio();
 	}
 	
 	@Override
@@ -78,8 +68,10 @@ public class BtAudioCommunicator implements HmdCommunicator {
 	
 	@Override
 	public void doStop() {
-		if (mAudioService != null)
+		if (mAudioService != null) {
 			mAudioService.stop();
+			mAudioService = null;
+		}
 	}
 
 	@Override
@@ -93,7 +85,7 @@ public class BtAudioCommunicator implements HmdCommunicator {
 			mAudioService = new BluetoothAudioService(activity_context, mHandler);
     }
 	
-	public void connectDevice(Intent data, boolean secure) {
+	/*public void connectDevice(Intent data, boolean secure) {
         // Get the device MAC address
         String address = data.getExtras()
             .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
@@ -101,7 +93,7 @@ public class BtAudioCommunicator implements HmdCommunicator {
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         // Attempt to connect to the device
         //mAudioService.connect(device, secure);
-    }
+    }*/
 	
 	public void findDevice() {
 		Intent serverIntent = null;
