@@ -94,5 +94,11 @@ public class UsbCommunicator extends USBControl implements HmdCommunicator{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public void doPause() {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

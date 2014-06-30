@@ -17,6 +17,7 @@ import android.content.Context;
 public class FingerTrackModel {
 	
 	public static final String DIR_CONFIRM_KEY = "CONFIRM";
+	public static final String DIR_CANCEL_KEY = "CANCEL";
 	public static final String DIR_STOP_KEY = "STOP";
 	public static final String DIR_START_KEY = "START";
 	public static final String DIR_RIGHT_KEY = "RIGHT";
@@ -30,6 +31,7 @@ public class FingerTrackModel {
 	public static final String DIR_NONE_KEY = "NONE";
 	
 	public static final String [] DIRECTION_KEYS = {DIR_CONFIRM_KEY,
+		DIR_CANCEL_KEY,
 		DIR_START_KEY,
 		DIR_RIGHT_KEY,
 		DIR_LEFT_KEY,
@@ -69,6 +71,10 @@ public class FingerTrackModel {
 	private int track_mode = PATH_MODE;
 	
 	private boolean DEBUG = false;
+	
+	public static String[] getDirectionKeys() {
+		return DIRECTION_KEYS;
+	}
 	
 	public FingerTrackModel(Context c, int cols, int rows) {
 		this.rows = rows;

@@ -15,7 +15,7 @@ public interface HmdCommunicator{
 	public boolean isConnected();
 	
 	public void doStart();
-	
+	public void doPause();
 	public void doStop();
 	public void doResume();
 }

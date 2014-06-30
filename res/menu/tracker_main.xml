@@ -40,4 +40,10 @@
         android:title="@string/deleteLogs"
         android:orderInCategory="8"
         android:showAsAction="never" android:enabled="true"/>
+    
+    <item android:id="@+id/action_sender" 
+        android:visible="true" 
+        android:showAsAction="never" 
+        android:titleCondensed="@string/sender" 
+        android:title="@string/sender_long"></item>
 </menu>

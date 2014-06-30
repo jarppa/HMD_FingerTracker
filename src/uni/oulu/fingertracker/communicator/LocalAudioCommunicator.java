@@ -91,4 +91,10 @@ public class LocalAudioCommunicator implements HmdCommunicator {
 	    }
 	}
 
+	@Override
+	public void doPause() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

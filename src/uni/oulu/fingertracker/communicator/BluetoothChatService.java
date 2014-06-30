@@ -236,7 +236,7 @@ public class BluetoothChatService {
     	Log.d(TAG, "failed!");
         Message msg = mHandler.obtainMessage(HmdBtCommunicator.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        //bundle.putString(HmdBtCommunicator.TOAST, "Unable to connect device");
+        bundle.putString(HmdBtCommunicator.TOAST, "Unable to connect device");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
@@ -252,7 +252,7 @@ public class BluetoothChatService {
     	Log.d(TAG, "lost!");
         Message msg = mHandler.obtainMessage(HmdBtCommunicator.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        //bundle.putString(HmdBtCommunicator.TOAST, "Device connection was lost");
+        bundle.putString(HmdBtCommunicator.TOAST, "Device connection was lost");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 

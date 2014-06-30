@@ -15,6 +15,8 @@
     <string name="go">Go</string>
     <string name="sendLogs">Send Logs</string>
     <string name="deleteLogs">Delete Logs</string>
+    <string name="sender">Sender</string>
+    <string name="sender_long">Send Directions</string>
     <string-array name="Cycles">
 		<item>3</item>
 		<item>5</item>
@@ -58,19 +60,5 @@
 		<item >13</item>
 		<item >14</item>
 		<item >15</item>
-	</string-array>
-	<string-array name="dir_array">
-	    <item >UP</item>
-		<item >DOWN</item>
-		<item >LEFT</item>
-		<item >RIGHT</item>
-		<item >LEFT_UP</item>
-		<item >RIGHT_UP</item>
-		<item >LEFT_DOWN</item>
-		<item >RIGHT_DOWN</item>
-		<item >CONFIRM</item>
-		<item >STOP</item>
-		<item >START</item>
-		<item >NONE</item>
 	</string-array>
 </resources>

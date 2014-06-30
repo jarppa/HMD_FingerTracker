@@ -41,6 +41,9 @@
         <activity
             android:name="uni.oulu.fingertracker.activity.LedConfigActivity">        
         </activity>
+        <activity
+            android:name="uni.oulu.fingertracker.activity.DirectionSenderActivity">        
+        </activity>
     </application>
 
 </manifest>

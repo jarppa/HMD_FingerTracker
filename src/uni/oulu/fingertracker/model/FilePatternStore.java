@@ -24,7 +24,9 @@ public final class FilePatternStore implements PatternStorer {
 	
 	private Hashtable<String,DirectionPattern> directions;// = new Hashtable<String,DirectionPattern>();
 	
+	/* TODO: Move these to some other place. */
 	public static final long[] DIR_CONFIRM_VAL = {0x80208220,0x0};
+	public static final long[] DIR_CANCEL_VAL = {0x0,0x0};
 	public static final long[] DIR_START_VAL = {0x80ffffff,0x0};
 	public static final long[] DIR_STOP_VAL = {0x0,0x0};
 	public static final long[] DIR_RIGHT_VAL = {0x800a0000,0x0};
@@ -47,6 +49,10 @@ public final class FilePatternStore implements PatternStorer {
 	
 	}
 	
+	public String getDefaultStore() {
+		return "led_patterns5";
+	}
+	
 	public void open(Context c, String filename) {
 		
 		if (this.filename != null && !this.filename.equals(filename)) {
@@ -60,6 +66,7 @@ public final class FilePatternStore implements PatternStorer {
 		if (directions == null) {
 			directions = new Hashtable<String,DirectionPattern>();
 			directions.put(FingerTrackModel.DIR_CONFIRM_KEY, new DirectionPattern(DIR_CONFIRM_VAL, 500,500,1));
+			directions.put(FingerTrackModel.DIR_CANCEL_KEY, new DirectionPattern(DIR_CANCEL_VAL, 500,500,1));
 			directions.put(FingerTrackModel.DIR_START_KEY, new DirectionPattern(DIR_START_VAL, 500,500,1));
 			directions.put(FingerTrackModel.DIR_RIGHT_KEY, new DirectionPattern(DIR_RIGHT_VAL, 500,500,1));
 			directions.put(FingerTrackModel.DIR_LEFT_KEY, new DirectionPattern(DIR_LEFT_VAL, 500,500,1));

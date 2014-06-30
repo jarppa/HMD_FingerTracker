@@ -1,9 +1,13 @@
 package uni.oulu.fingertracker.activity;
 
+import java.util.HashMap;
+import java.util.List;
+
 import uni.oulu.fingertracker.R;
 import uni.oulu.fingertracker.communicator.HmdBtCommunicator;
 import uni.oulu.fingertracker.model.DirectionPattern;
 import uni.oulu.fingertracker.model.FilePatternStore;
+import uni.oulu.fingertracker.model.FingerTrackModel;
 import uni.oulu.fingertracker.ui.LedButton;
 
 import android.os.Bundle;
@@ -14,20 +18,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 public class LedConfigActivity extends Activity {
 	
-	NumberPicker cyclesSpinner;
-	NumberPicker frequencySpinner;
-	NumberPicker brightnessSpinner;
-    Spinner directionSpinner;
-    TextView log_textview;
-    int blink_time;
-    int frequency;
-    int brightness;
+	private NumberPicker cyclesSpinner;
+	private NumberPicker frequencySpinner;
+	private NumberPicker brightnessSpinner;
+	private Spinner directionSpinner;
+	private TextView log_textview;
+	private int blink_time;
+	private int frequency;
+	private int brightness;
 
     //private Hashtable<String,DirectionPattern> directions = new Hashtable<String,DirectionPattern>();
     private HmdBtCommunicator mBtCommunicator;
@@ -38,11 +45,16 @@ public class LedConfigActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ledconfig);
      
+        String [] keys = FingerTrackModel.getDirectionKeys();
+        
         cyclesSpinner =(NumberPicker)findViewById(R.id.cycles_spinner);
         brightnessSpinner =(NumberPicker)findViewById(R.id.brightness_spinner);
         frequencySpinner =(NumberPicker)findViewById(R.id.freq_spinner);
+        
         directionSpinner =(Spinner)findViewById(R.id.dir_spinner);
-      
+        SpinnerAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, keys);
+        directionSpinner.setAdapter(adapter);
+        
         cyclesSpinner.setMaxValue(5);
         cyclesSpinner.setMinValue(1);
         brightnessSpinner.setMaxValue(15);
@@ -54,7 +66,7 @@ public class LedConfigActivity extends Activity {
         mBtCommunicator = new HmdBtCommunicator(this, null);
         //directions = mBtCommunicator.getDirections();
         mStore = FilePatternStore.getInstance();
-        mStore.open(getApplicationContext(), "led_patterns4");
+        mStore.open(getApplicationContext(), mStore.getDefaultStore());
         mStore.load();
         
         directionSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {

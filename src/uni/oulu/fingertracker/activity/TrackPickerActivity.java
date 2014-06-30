@@ -1,12 +1,9 @@
 package uni.oulu.fingertracker.activity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import uni.oulu.fingertracker.R;
-import uni.oulu.fingertracker.R.id;
-import uni.oulu.fingertracker.R.layout;
 import uni.oulu.fingertracker.model.TrackStore;
 
 import android.app.Activity;

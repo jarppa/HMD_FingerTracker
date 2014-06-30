@@ -19,28 +19,22 @@
 
 package uni.oulu.fingertracker.communicator;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Hashtable;
 
 import uni.oulu.fingertracker.activity.DeviceListActivity;
 import uni.oulu.fingertracker.model.DirectionPattern;
 import uni.oulu.fingertracker.model.FilePatternStore;
-import uni.oulu.fingertracker.model.FingerTrackModel;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 public class HmdBtCommunicator implements HmdCommunicator {
 
@@ -61,6 +55,7 @@ public class HmdBtCommunicator implements HmdCommunicator {
     public static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     public static final int REQUEST_ENABLE_BT = 3;
     
+    
     // Message types sent from the BluetoothChatService Handler
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
@@ -72,6 +67,7 @@ public class HmdBtCommunicator implements HmdCommunicator {
     
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
+    public static final String TOAST = "toast";
     
 	private BluetoothAdapter mBluetoothAdapter = null;
 	private BluetoothChatService mChatService = null;
@@ -82,7 +78,7 @@ public class HmdBtCommunicator implements HmdCommunicator {
 	private Activity activity_context = null;
 	private boolean bConnected = false;
 	private long last_data = 0x0;
-	private String last_string_data = null;
+	//private String last_string_data = null;
 	
 	private BluetoothDevice last_device = null;
 	
@@ -92,21 +88,26 @@ public class HmdBtCommunicator implements HmdCommunicator {
 		activity_context = a;
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		mStore = FilePatternStore.getInstance();
-		mStore.open(activity_context, "led_patterns4");
+		mStore.open(activity_context, mStore.getDefaultStore());
 	}
 	
 	@Override
 	public void doStart() {
-
-		// If BT is not on, request that it be enabled.
-	    // setupChat() will then be called during onActivityResult
-	    if (!mBluetoothAdapter.isEnabled()) {
+		if (!mBluetoothAdapter.isEnabled()) {
 	        Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 	        activity_context.startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
 	    // Otherwise, setup the chat session
 	    } else {
 	        if (mChatService == null) setupChat();
 	    }
+	
+	}
+	
+	public void doStart(String dev) {
+
+		// If BT is not on, request that it be enabled.
+	    // setupChat() will then be called during onActivityResult
+	    
 	    
 	}
 	
@@ -147,13 +148,22 @@ public class HmdBtCommunicator implements HmdCommunicator {
         // Get the BluetoothDevice object
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         // Attempt to connect to the device
-        Log.d("BTBLOP", "DEVICE:"+device.toString());
+        //Log.d("BTBLOP", "DEVICE:"+device.toString());
         if (device != null) {
         	mChatService.connect(device, secure);
         	last_device = device;
         }
     }
 	
+	public void connectDevice(String address, boolean secure) {
+        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+        // Attempt to connect to the device
+        //Log.d("BTBLOP", "DEVICE:"+device.toString());
+        if (device != null) {
+        	mChatService.connect(device, secure);
+        	last_device = device;
+        }
+    }
 	public void findDevice() {
 		Intent serverIntent = null;
 		serverIntent = new Intent(activity_context, DeviceListActivity.class);
@@ -186,17 +196,23 @@ public class HmdBtCommunicator implements HmdCommunicator {
             	case MESSAGE_STATE_CHANGE:
             		switch (msg.arg1) {
             			case BluetoothChatService.STATE_CONNECTED:
+            				if (!bConnected)
+            					Toast.makeText(activity_context, "Bluetooth connected!", Toast.LENGTH_SHORT).show();
             				bConnected = true;
             				break;
             			case BluetoothChatService.STATE_CONNECTING:                   
             				break;
             			case BluetoothChatService.STATE_LISTEN:
             			case BluetoothChatService.STATE_NONE:
+            				if (bConnected)
+            					Toast.makeText(activity_context, "Bluetooth disconnected!", Toast.LENGTH_SHORT).show();
             				bConnected = false;
             				break;
             		}
             		break;
-            	case MESSAGE_WRITE:
+            	case MESSAGE_TOAST:
+            		Bundle b = msg.getData();
+            		Toast.makeText(activity_context, b.getString(TOAST), Toast.LENGTH_SHORT).show();
             		//byte[] writeBuf = (byte[]) msg.obj;
             		// construct a string from the buffer
             		//String writeMessage = new String(writeBuf);
@@ -296,13 +312,19 @@ public class HmdBtCommunicator implements HmdCommunicator {
 			Message m = mHandler.obtainMessage(SEND_NEXT_DATA, d.getData(0));
 			mHandler.sendMessage(m);
 		}
-		last_string_data = data;
+		//last_string_data = data;
 		
 	    /*if (last_data != d) {
 	        new SendDataTask().execute(d);
 	        last_data = d;
 	    }*/
 	    return true;
+	}
+
+	@Override
+	public void doPause() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/*private void loadPatterns() {

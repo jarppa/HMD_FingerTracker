@@ -298,6 +298,7 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
+    	Intent i;
         switch (item.getItemId()) {
         	case R.id.action_done:
         		mModel.setTrackReady();
@@ -330,7 +331,7 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
                 return true;
                 
             case R.id.action_settings:
-            	Intent i = new Intent(mContext,SettingsActivity.class);
+            	i = new Intent(mContext,SettingsActivity.class);
 				startActivity(i);
 				return true;
 				
@@ -341,17 +342,17 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
             		for (int j=0; j<fs.length;j++) {
             			uris.add(Uri.parse("file://"+fs[j]));
             		}
-            		Intent intent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
-            		intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                	intent.setType("message/rfc822");
+            		i = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
+            		i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                	i.setType("message/rfc822");
                 	//i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-                	intent.putExtra(Intent.EXTRA_SUBJECT, "HMD Finger tracker logs");
+                	i.putExtra(Intent.EXTRA_SUBJECT, "HMD Finger tracker logs");
                 	//FUN FACT: Nexus5 spews out hadled errors on charseq data with EXTRA_TEXT eventhough API defines it so...
-                	intent.putExtra(Intent.EXTRA_TEXT, "This email was sent using HMD Finger Tracker application.");
-            		intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+                	i.putExtra(Intent.EXTRA_TEXT, "This email was sent using HMD Finger Tracker application.");
+            		i.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
             		try {
             			
-                	    startActivity(Intent.createChooser(intent, "Send logs..."));
+                	    startActivity(Intent.createChooser(i, "Send logs..."));
                 	} catch (android.content.ActivityNotFoundException ex) {
                 	    Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 	}
@@ -365,6 +366,11 @@ public class TrackerActivity extends Activity implements FingerTrackStateListene
             	mModel.clearLogs();
             	return true;
             	
+            case R.id.action_sender:
+            	i = new Intent(mContext,DirectionSenderActivity.class);
+				startActivity(i);
+				return true;
+				
             default:
                 return super.onOptionsItemSelected(item);
         }
